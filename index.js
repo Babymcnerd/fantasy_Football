@@ -1,5 +1,5 @@
 var data = [
-    ["Name", "Round_drafted", "null", "Rookie_year_age", "Height", "Weight", "Arm_Length", "null", "40-yard dash", "Speed_Score", "Burst_Score", "null", "College_Dominator", "College_Target_Share", "Breakout_Age", "null", "1st_year_finish", "2nd_year_finish", "3rd_year_finish", "4th_year_finish", "5th_year_finish", "6th_year_finish", "7th_year_finish", "null"],
+    ["Name", "Round_drafted", "null", "Rookie_year_age", "Height", "Weight", "Arm_Length", "null", "40-yard dash", "Speed_Score", "Burst_Score", "null", "College_Dominator", "College_Target_Share", "Breakout_Age", "null", "1st_year_finish", "2nd_year_finish", "3rd_year_finish", "4th_year_finish", "5th_year_finish", "6th_year_finish", "7th_year_finish", "something"],
     ["Aaron Dobson", 2, "null", "22", "6'3''", "210", "33", "null", "4.42", "113.1", "120", "null", "26.10%", "17.70%", "18.1", "null", "55", "171", "129", "null", "null", "null", "null", "null"],
     ["Parris Campbell", 2, "null", "22", "6'0''", "205", "32.25", "null", "4.31", "117.2", "135.5", "null", "23.50%", "17.90%", "18.1", "null", "109", "95", "null", "null", "null", "null", "null", "null"],
     ["Amari Cooper", 1, "null", "20", "6'1''", "211", "31.5", "null", "4.42", "110.6", "116.1", "null", "47.20%", "19.20%", "18.2", "null", "28", "18", "34", "22", "16", "22", "null", "null"],
@@ -154,16 +154,27 @@ var data = [
     for (let i = 0; i < data[0].length; i++) {
         let newFilter = document.createElement("input");
         let filterName = document.createTextNode(['filter_' + data[0][i]]);
-        newFilter.id = ['filter_' + data[0][i]];
+        if (data[0][i] == "null"){
+            newFilter.id = ['filter_' + i];
+        } else {
+            newFilter.id = ['filter_' + data[0][i]];
+        }
         newFilter.className = "filter";
         newFilter.appendChild(filterName);
         let divLocation = document.getElementById('toggle');
-        var label = document.createElement("Label");
-        label.setAttribute("for", ['filter_' + data[0][i]]);
-        label.innerHTML = [data[0][i]];
-        document.body.appendChild(label);
+        if (data[0][i] != "null"){
+            var label = document.createElement("Label");
+            label.setAttribute("for", ['filter_' + data[0][i]]);
+            label.innerHTML = [data[0][i]];
+            document.body.appendChild(label);
+        }
         document.body.insertBefore(newFilter, divLocation);
-    // }
+    }
+    for (let i = 0; i < data[0].length; i++) {
+        if (data[0][i] == "null"){
+            document.getElementById(['filter_' + i]).remove();
+        }
+    }
 
     document.getElementById("saveButton").addEventListener("click", applyFilters);
 
@@ -185,7 +196,7 @@ var data = [
     }
     document.body.appendChild(table);
 
-}
+// }
 
 function applyFilters() {
     let rowIndex = 0;
